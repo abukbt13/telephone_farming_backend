@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\TelephoneFarmer\TelephoneFarmerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,3 +12,14 @@ Route::get('/user', function (Request $request) {
 
 Route::post('auth/register', [AuthController::class, 'createUser']);
 Route::post('auth/login', [AuthController::class, 'login']);
+
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('user-auth', [AuthController::class, 'auth']);
+    Route::post('tf/farm', [TelephoneFarmerController::class, 'createFarm']);
+    Route::get('tf/farm', [TelephoneFarmerController::class, 'viewFarm']);
+
+    Route::post('tf/manager', [TelephoneFarmerController::class, 'createManager']);
+    Route::get('tf/manager', [TelephoneFarmerController::class, 'viewManagers']);
+
+});
