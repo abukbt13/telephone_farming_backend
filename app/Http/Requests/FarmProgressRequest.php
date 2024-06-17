@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FarmManagerRequest extends FormRequest
+class FarmProgressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class FarmManagerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone'=>'required',
-            'email'=>'required|unique:users',
-            'farm_id'=>'required',
+            'farm_id' =>'required',
+            'type' =>'required',
         ];
     }
 }

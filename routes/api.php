@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\FarmManager\FarmProgressController;
 use App\Http\Controllers\TelephoneFarmer\TelephoneFarmerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +22,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('tf/manager', [TelephoneFarmerController::class, 'createManager']);
     Route::get('tf/manager', [TelephoneFarmerController::class, 'viewManagers']);
+
+    Route::post('fm/farm/progress', [FarmProgressController::class, 'AddFarmProgress']);
+    Route::get('fm/farm/progress', [FarmProgressController::class, 'viewFarmProgress']);
 
 });

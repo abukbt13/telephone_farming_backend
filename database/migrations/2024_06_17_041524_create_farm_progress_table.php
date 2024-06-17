@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('farms', function (Blueprint $table) {
+        Schema::create('farm_progress', function (Blueprint $table) {
             $table->id();
-            $table->string('farm_name');
-            $table->string('location');
-            $table->string('user_id');
-            $table->string('type_of_farming');
+            $table->integer('farm_id');
+            $table->string('type');
+            $table->string('date');
+            $table->string('photos');
+            $table->integer('user_id');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('farms');
+        Schema::dropIfExists('farm_progress');
     }
 };

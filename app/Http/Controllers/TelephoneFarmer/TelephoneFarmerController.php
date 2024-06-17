@@ -18,6 +18,7 @@ class TelephoneFarmerController extends Controller
         $farm->farm_name = $request->farm_name;
         $farm->location = $request->location;
         $farm->type_of_farming = $request->type_of_farming;
+        $farm->user_id = auth()->user()->id;
         $farm->save();
         return[
             'status' =>'success',
@@ -33,26 +34,34 @@ class TelephoneFarmerController extends Controller
     }
 
     function  createManager(FarmManagerRequest $request){
+        $data = $request->all();
+//        dd($data);
         $user = new User();
+
         $user->email = $data['email'];
         $user->name = $data['name'];
         $user->phone = $data['phone'];
         $user->email = $data['email'];
-        $user->role = "telephone_farmer";
-        $user->password = Hash::make($request->password);
+        $user->role = "Farm Manager";
+        $user->password = Hash::make($request->email);
         $user->save();
-        $farmmanager = new FarmManager()
+
+        $farmmanager = new FarmManager();
+        $farmmanager->user_id = $user->id;
+        $farmmanager->farm_id = $data['farm_id'];
+        $farmmanager->save();
 
         return[
             'status' =>'success',
-            'data' =>$farm
+            'manager' =>$user,
+            'farmmanager' =>$farmmanager
         ];
     }
-    function viewFarm(){
-        $farm = Farm::all();
+    function viewManagers(){
+        $farmmanagers = FarmManager::all();
         return[
             'status' =>'success',
-            'data' =>$farm
+            'data' =>$farmmanagers
         ];
     }
 }
