@@ -27,7 +27,8 @@ class TelephoneFarmerController extends Controller
         ];
     }
     function viewFarm(){
-        $farm = Farm::all();
+        $user_id = Auth()->user()->id;
+        $farm = Farm::where('user_id',$user_id)->get();
         return[
             'status' =>'success',
             'data' =>$farm
@@ -35,11 +36,11 @@ class TelephoneFarmerController extends Controller
     }
 
     function  createManager(FarmManagerRequest $request){
+        $user_id = Auth()->user()->id;
         $data = $request->all();
 //        dd($data);
         $user = new User();
 
-        $user->email = $data['email'];
         $user->name = $data['name'];
         $user->phone = $data['phone'];
         $user->email = $data['email'];
@@ -48,6 +49,7 @@ class TelephoneFarmerController extends Controller
         $user->save();
 
         $farmmanager = new FarmManager();
+        $farmmanager->belong_user_id = $user_id;
         $farmmanager->user_id = $user->id;
         $farmmanager->farm_id = $data['farm_id'];
         $farmmanager->save();
@@ -58,12 +60,17 @@ class TelephoneFarmerController extends Controller
             'farmmanager' =>$farmmanager
         ];
     }
+
     function viewManagers(){
         $user_id = Auth::user()->id;
-        $farmmanagers = FarmManager::where('user_id',$user_id);
-        return[
-            'status' =>'success',
-            'data' =>$farmmanagers
+        $farmManagers = FarmManager::where('belong_user_id', $user_id)
+            ->join('users', 'users.id', '=', 'farm_managers.user_id')
+            ->join('farms', 'farms.id', '=', 'farm_managers.farm_id')
+            ->select('farm_managers.*', 'farms.*','users.*') // Adjust the columns as needed
+            ->get();
+        return [
+            'status' => 'success',
+            'data' => $farmManagers
         ];
     }
 }
