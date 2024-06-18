@@ -7,6 +7,7 @@ use App\Http\Requests\FarmManagerRequest;
 use App\Http\Requests\FarmRequest;
 use App\Models\Farm;
 use App\Models\FarmManager;
+use App\Models\FarmProgress;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,19 @@ class TelephoneFarmerController extends Controller
         return[
             'status' =>'success',
             'data' =>$farm
+        ];
+    }
+    function getFarm($id){
+        $farm = Farm::join('users','users.id','=','farms.user_id')
+        ->select('farms.*','users.phone','users.email','users.name')
+            ->where('farms.id',$id)
+        ->get();
+        $farm_progress = FarmProgress::where('farm_id',$id)->get();
+
+        return[
+            'status' =>'success',
+            'farm' =>$farm,
+            'farm_progress' =>$farm_progress,
         ];
     }
 
