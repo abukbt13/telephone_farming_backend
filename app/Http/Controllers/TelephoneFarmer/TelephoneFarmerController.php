@@ -9,6 +9,7 @@ use App\Models\Farm;
 use App\Models\FarmManager;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class TelephoneFarmerController extends Controller
@@ -42,7 +43,7 @@ class TelephoneFarmerController extends Controller
         $user->name = $data['name'];
         $user->phone = $data['phone'];
         $user->email = $data['email'];
-        $user->role = "Farm Manager";
+        $user->role = "farm_manager";
         $user->password = Hash::make($request->email);
         $user->save();
 
@@ -58,7 +59,8 @@ class TelephoneFarmerController extends Controller
         ];
     }
     function viewManagers(){
-        $farmmanagers = FarmManager::all();
+        $user_id = Auth::user()->id;
+        $farmmanagers = FarmManager::where('user_id',$user_id);
         return[
             'status' =>'success',
             'data' =>$farmmanagers
