@@ -24,7 +24,6 @@ class FarmManagerRequest extends FormRequest
         return [
             'phone'=>'required',
             'email'=>'required|unique:users',
-            'farm_id'=>'required',
         ];
     }
 }

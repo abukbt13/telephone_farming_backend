@@ -20,11 +20,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('tf/farm', [TelephoneFarmerController::class, 'createFarm']);
     Route::get('tf/farm', [TelephoneFarmerController::class, 'viewFarm']);
     Route::get('tf/farm/{id}', [TelephoneFarmerController::class, 'getFarm']);
+    Route::post('tf/farm/manager', [TelephoneFarmerController::class, 'assignManager']);
+
 
     Route::post('tf/manager', [TelephoneFarmerController::class, 'createManager']);
     Route::get('tf/manager', [TelephoneFarmerController::class, 'viewManagers']);
 
     Route::post('fm/farm/progress', [FarmProgressController::class, 'AddFarmProgress']);
-    Route::get('fm/farm/progress', [FarmProgressController::class, 'viewFarmProgress']);
+    Route::get('fm/farm/{id}', [FarmProgressController::class, 'viewFarmProgress']);
+    Route::get('fm/farm', [FarmProgressController::class, 'viewFarm']);
 
 });

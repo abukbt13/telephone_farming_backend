@@ -23,7 +23,8 @@ class FarmProgressRequest extends FormRequest
     {
         return [
             'farm_id' =>'required',
-            'type' =>'required',
+            'description' =>'required',
+            'activity_name' =>'required',
         ];
     }
 }
