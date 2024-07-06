@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FarmManager\FarmProgressController;
 use App\Http\Controllers\TelephoneFarmer\TelephoneFarmerController;
 use Illuminate\Http\Request;
@@ -29,5 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('fm/farm/progress', [FarmProgressController::class, 'AddFarmProgress']);
     Route::get('fm/farm/{id}', [FarmProgressController::class, 'viewFarmProgress']);
     Route::get('fm/farm', [FarmProgressController::class, 'viewFarm']);
+
+    Route::post('chat', [ChatController::class, 'storeChat']);
 
 });
