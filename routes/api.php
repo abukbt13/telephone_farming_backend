@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('fm/farm/{id}', [FarmProgressController::class, 'viewFarmProgress']);
     Route::get('fm/farm', [FarmProgressController::class, 'viewFarm']);
 
-    Route::post('chat', [ChatController::class, 'storeChat']);
+    Route::post('chat/{id}', [ChatController::class, 'storeChat']);
+    Route::get('chat', [ChatController::class, 'getChats']);
 
 });
