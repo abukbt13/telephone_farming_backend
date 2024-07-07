@@ -28,7 +28,7 @@ class ChatController extends Controller
            'data' =>$chat
        ];
    }
-   public function getChats()
+   public function myChats()
    {
 
 
@@ -70,5 +70,28 @@ class ChatController extends Controller
            'users' => $users
        ];
 
+   }
+   public function getUsers(){
+       // Fetch users and select specific fields
+       $users = User::where('role','telephone_farmer')->orwhere('role','farm_manager')->select('id','phone','name')->get();
+
+       // Return the list of users with their details
+       return response()->json([
+           'status' => 'success',
+           'message' => 'Users retrieved successfully',
+           'users' => $users
+       ]);
+   }
+   public function getChat($id){
+       // Fetch users and select specific fields
+       $user_id = Auth::user()->id;
+        $chat_id = $user_id + $id;
+       $messages = Chat::where('chat_id',$chat_id)->get();
+       // Return the list of users with their details
+       return response()->json([
+           'status' => 'success',
+           'message' => 'Users retrieved successfully',
+           'messages' => $messages
+       ]);
    }
 }
