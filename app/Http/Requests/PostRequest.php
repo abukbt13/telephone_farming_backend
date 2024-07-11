@@ -22,11 +22,11 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'description' => 'required|string',
-        'photos' => 'nullable',
-        'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Example rules for each photo
-        'videos' => 'array|nullable',
-        'videos.*' => 'file|mimes:mp4,mov,ogg,qt|max:20000', // Example rules for each video
-    ];
+            'description' => 'required|string',
+            'photos' => 'array|nullable',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Example photo validation
+            'videos' => 'array|nullable',
+            'videos.*' => 'file|mimes:mp4,avi,wmv,mpeg|max:20480', // Adjust mime types and max size as needed
+        ];
     }
 }
