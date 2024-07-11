@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -105,7 +106,21 @@ class PostController extends Controller
         }
     }
 
-    public function getPost(){
+    public function getPost($id){
+        $post = Post::find($id);
+            // Check if the 'photos' attribute exists and is not empty
+            if (isset($post->photos) && !empty($post->photos)) {
+                $post->photos = json_decode($post->photos); // Convert JSON string to PHP array
+            } else {
+                $post->photos = []; // Set an empty array if 'photos' is null or empty
+            }
+        $comment = Comment::where('post_id', $id)->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'List Comments',
+                'post' => $post,
+                'comments' => $comment,
+            ]);
 
     }
 }
