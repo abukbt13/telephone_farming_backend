@@ -77,7 +77,9 @@ class PostController extends Controller
     {
         try {
             // Fetch all posts from the database
-            $posts = Post::all();
+            $posts = Post::join('users', 'users.id', '=', 'posts.user_id')
+                    ->select('posts.*', 'users.name','users.profile')
+                    ->get();
 
             // Iterate through each post
             foreach ($posts as $post) {
@@ -114,7 +116,10 @@ class PostController extends Controller
             } else {
                 $post->photos = []; // Set an empty array if 'photos' is null or empty
             }
-        $comment = Comment::where('post_id', $id)->get();
+        $comment = Comment::join('users', 'users.id', '=', 'comments.user_id')
+            ->select('comments.*', 'users.name','users.profile')
+            ->where('post_id', $id)
+            ->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'List Comments',

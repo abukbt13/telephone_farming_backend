@@ -104,4 +104,24 @@ class AuthController extends Controller
             return response()->json(['authenticated' => false]);
         }
     }
+    public function UpdateProfile(Request $request,$id){
+        $data = $request->all();
+        $user = User::find($id);
+      $user -> name = $data['name'];
+      $user -> phone = $data['phone'];
+
+        if ($request->hasFile('profile')) {
+            $profile= $request->file('profile');
+            $PictureName = time() . '_' .  $profile->getClientOriginalName();
+            $user->profile = $PictureName;
+            $profile->move(public_path('Profile/picture'), $PictureName);
+        }
+        $user->update();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Profile updated Successfully',
+            'user' => $user,
+        ]);
+    }
 }

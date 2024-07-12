@@ -18,6 +18,7 @@ Route::post('auth/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('user-auth', [AuthController::class, 'auth']);
+    Route::post('auth/user/{id}', [AuthController::class, 'UpdateProfile']);
     Route::post('tf/farm', [TelephoneFarmerController::class, 'createFarm']);
     Route::get('tf/farm', [TelephoneFarmerController::class, 'viewFarm']);
     Route::get('tf/farm/{id}', [TelephoneFarmerController::class, 'getFarm']);
