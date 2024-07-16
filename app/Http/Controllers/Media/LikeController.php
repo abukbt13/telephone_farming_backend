@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Media;
 
+use App\Http\Controllers\Controller;
 use App\Models\Like;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
