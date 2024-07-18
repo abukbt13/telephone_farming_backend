@@ -25,6 +25,7 @@ class GroupRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'required|string',
             'category' => 'required|string',
-        ];
+            'profile' => 'nullable',
+            ];
     }
 }

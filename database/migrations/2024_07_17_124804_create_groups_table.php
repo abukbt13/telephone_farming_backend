@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id');
+            $table->string('profile');
             $table->string('category');
             $table->timestamps();
         });
