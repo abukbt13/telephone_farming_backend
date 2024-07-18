@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FarmRequest extends FormRequest
+class GroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class FarmRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'farm_name'=>'required|unique:farms,farm_name',
-            'location'=>'required',
-            'type_of_farming'=>'required',
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'category' => 'required|string',
         ];
     }
 }

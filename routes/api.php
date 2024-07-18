@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\FarmManager\FarmProgressController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\Media\CommentController;
 use App\Http\Controllers\Media\LikeController;
 use App\Http\Controllers\Media\PostsController;
@@ -44,7 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::get('v1/posts', [NewPostController::class, 'listPosts']);
-    Route::post('v1/new/post', [NewPostController::class, 'CreatePost']);
+    Route::post('v1/post', [NewPostController::class, 'CreatePost']);
     Route::get('/v1/post/{post_id}', [NewPostController::class, 'getPost']);
     Route::get('/v1/posts/{post_id}/likes', [NewPostController::class, 'addLike']);
 
@@ -53,4 +54,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/v1/posts/{post_id}/comments/{comment_id}', [NewPostController::class, 'getComment']);
 
 
+//    groups
+    Route::post('v1/groups', [GroupController::class, 'createGroup']);
+    Route::get('v1/groups', [GroupController::class, 'listGroup']);
+
+
+
 });
+
+
+

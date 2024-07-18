@@ -75,8 +75,15 @@ class ChatController extends Controller
 
    }
    public function getUsers(){
+       $user_id = Auth::user()->id;
        // Fetch users and select specific fields
-       $users = User::where('role','telephone_farmer')->orwhere('role','farm_manager')->select('id','phone','name')->get();
+       $users = User::where(function ($query) {
+           $query->where('role', 'telephone_farmer')
+               ->orWhere('role', 'farm_manager');
+       })
+           ->where('id', '!=', $user_id)
+           ->select('id', 'phone', 'name')
+           ->get();
 
        // Return the list of users with their details
        return response()->json([

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('farm_managers', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('belong_user_id');
             $table->integer('farm_id');
+            $table->integer('user_id');
+            $table->integer('manager_id');
             $table->timestamps();
         });
     }

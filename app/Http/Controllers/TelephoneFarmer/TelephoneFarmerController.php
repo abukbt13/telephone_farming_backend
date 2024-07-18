@@ -100,7 +100,6 @@ class TelephoneFarmerController extends Controller
         $rules = [
             'manager_id' => 'required',
             'farm_id' => 'required',
-
         ];
         $data = request()->all();
         $valid = Validator::make($data, $rules);
@@ -111,6 +110,13 @@ class TelephoneFarmerController extends Controller
             ]);
         }
         $user_id = Auth::user()->id;
+        $exist =FarmManager::where('manager_id',$data['manager_id'])->where('farm_id',$data['farm_id'])->count();
+        if ($exist > 0){
+            return [
+                'status' => 'failed',
+                'message' => 'Manager already exist',
+            ];
+        }
         $farmmanager = new FarmManager();
         $farmmanager->manager_id = $request->manager_id;
         $farmmanager->user_id = $user_id;
