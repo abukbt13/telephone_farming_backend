@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::get('v1/posts', [NewPostController::class, 'listPosts']);
+    Route::get('v1/me/posts', [NewPostController::class, 'getMyposts']);
+
     Route::post('v1/post', [NewPostController::class, 'CreatePost']);
     Route::get('/v1/post/{post_id}', [NewPostController::class, 'getPost']);
     Route::get('/v1/posts/{post_id}/likes', [NewPostController::class, 'addLike']);

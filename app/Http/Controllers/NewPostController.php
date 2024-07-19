@@ -38,7 +38,6 @@ class NewPostController extends Controller
             'posts' => $posts,
         ]);
 
-
     }
     public function CreatePost(PostRequest $request)
     {
@@ -121,6 +120,32 @@ class NewPostController extends Controller
             'post' => $post,
             'user' => $user,
             'comments' => $comment,
+        ]);
+
+    }
+
+    public function getMyposts(){
+        $user_id = Auth::user()->id;
+        $posts = Post::where('user_id',$user_id)->join('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.*', 'users.name','users.profile')
+            ->orderby('posts.created_at', 'desc')
+            ->get();
+
+        // Iterate through each post
+        foreach ($posts as $post) {
+            // Check if the 'photos' attribute exists and is not empty
+            if (isset($post->photos) && !empty($post->photos)) {
+                $post->photos = json_decode($post->photos); // Convert JSON string to PHP array
+            } else {
+                $post->photos = []; // Set an empty array if 'photos' is null or empty
+            }
+        }
+
+        // Return JSON response with success status, message, and posts data
+        return response()->json([
+            'status' => 'success',
+            'message' => 'List Posts',
+            'posts' => $posts,
         ]);
 
     }
