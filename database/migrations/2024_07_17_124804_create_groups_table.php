@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->integer('user_id');
-            $table->string('profile');
+            $table->string('profile')->nullable();
             $table->string('category');
             $table->timestamps();
         });

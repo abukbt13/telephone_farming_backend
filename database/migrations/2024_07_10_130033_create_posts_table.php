@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text('videos')->nullable();
             $table->integer('likes')->default(0);
             $table->integer('comments')->default(0);
-            $table->foreignId('user_id');
+            $table->integer('user_id');
+            $table->integer('group_id');
             $table->timestamps();
         });
     }
