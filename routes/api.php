@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::get('v1/posts', [NewPostController::class, 'listPosts']);
+    Route::get('v1/group/{id}/posts', [NewPostController::class, 'listGroupPosts']);
     Route::get('v1/me/posts', [NewPostController::class, 'getMyposts']);
 
     Route::post('v1/post', [NewPostController::class, 'CreatePost']);

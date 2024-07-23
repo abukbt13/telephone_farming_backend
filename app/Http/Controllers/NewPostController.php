@@ -39,6 +39,33 @@ class NewPostController extends Controller
         ]);
 
     }
+    public function listGroupPosts($id)
+    {
+        // Fetch all posts from the database
+        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')
+            ->where('group_id',$id)
+            ->select('posts.*', 'users.name','users.profile')
+            ->orderby('posts.created_at', 'desc')
+            ->get();
+
+        // Iterate through each post
+        foreach ($posts as $post) {
+            // Check if the 'photos' attribute exists and is not empty
+            if (isset($post->photos) && !empty($post->photos)) {
+                $post->photos = json_decode($post->photos); // Convert JSON string to PHP array
+            } else {
+                $post->photos = []; // Set an empty array if 'photos' is null or empty
+            }
+        }
+
+        // Return JSON response with success status, message, and posts data
+        return response()->json([
+            'status' => 'success',
+            'message' => 'List Posts',
+            'posts' => $posts,
+        ]);
+
+    }
     public function CreatePost(PostRequest $request)
     {
 
