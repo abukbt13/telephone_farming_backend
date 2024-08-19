@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\EducationController;
 use App\Http\Controllers\FarmManager\FarmProgressController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\Media\CommentController;
@@ -63,6 +64,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('v1/groups/{id}', [GroupController::class, 'getGroup']);
 
 
+//  Education resource
+
+    Route::post('v1/education', [EducationController::class, 'store']);
+    Route::get('v1/education', [EducationController::class, 'showDocuments']);
 
 });
 
