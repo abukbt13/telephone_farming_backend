@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('v1/education', [EducationController::class, 'store']);
     Route::get('v1/education', [EducationController::class, 'showDocuments']);
+    Route::get('v1/education/{id}', [EducationController::class, 'getDocument']);
 
 });
 

@@ -17,8 +17,6 @@ class FarmProgressController extends Controller
     {
         $user_id = Auth::user()->id;
 
-
-
         $data = $request->all();
         $user_id = auth()->user()->id;
         $progress = new FarmProgress();

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('farm_progress', function (Blueprint $table) {
             $table->id();
             $table->integer('farm_id');
-            $table->string('type');
             $table->string('date');
             $table->string('photos');
             $table->integer('user_id');
+            $table->string('activity_name');
             $table->string('description')->nullable();
             $table->timestamps();
         });

@@ -13,28 +13,41 @@ class EducationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'document' => 'required',
-            'title' => 'required',
-        ]);
+//        // Validate the incoming request
+//        $request->validate([
+//            'document' => 'required', // Adjust MIME types and max size as needed
+//            'title' => 'required|string',
+//        ]);
+
+
         $data = $request->all();
 
+        // Create a new Education model instance
         $documentsave = new Education();
         $documentsave->description = $data['description'];
         $documentsave->title = $data['title'];
-        $document = $request->file('document');
-
-        // Generate a unique name for the file
-        $documentName = time() . '_' . $document->getClientOriginalName();
+        // Handle the document upload
 
 
-        $documentsave->document = $documentName;
+            $document = $request->file('document_file');
 
+            // Generate a unique name for the file
+            $documentName = time() . '_' . $document->getClientOriginalName();
+
+            // Move the file to the public/documents directory
+            $document->move(public_path('documents'), $documentName);
+
+            // Save the document name in the database
+            $documentsave->document = $documentName;
+
+
+        // Save the record in the database
         $documentsave->save();
 
-        return[
-            'status'=>'success',
-            'data' =>$documentsave
+        // Return a success response
+        return [
+            'status' => 'success',
+            'data' => $documentsave
         ];
     }
 
@@ -53,9 +66,13 @@ class EducationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Education $education)
+    public function getDocument($id)
     {
-        //
+        $document = Education::findOrFail($id);
+        return response()->json([
+            'status'=>'success',
+            'document'=>$document,
+        ]);
     }
 
     /**
