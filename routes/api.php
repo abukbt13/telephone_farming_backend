@@ -9,6 +9,7 @@ use App\Http\Controllers\Media\CommentController;
 use App\Http\Controllers\Media\LikeController;
 use App\Http\Controllers\Media\PostsController;
 use App\Http\Controllers\NewPostController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TelephoneFarmer\TelephoneFarmerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +70,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('v1/education', [EducationController::class, 'store']);
     Route::get('v1/education', [EducationController::class, 'showDocuments']);
     Route::get('v1/education/{id}', [EducationController::class, 'getDocument']);
+
+    Route::post('v1/schedule', [ScheduleController::class, 'schedule']);
+    Route::get('v1/schedule', [ScheduleController::class, 'listSchedules']);
+    Route::get('v1/schedule/{id}', [ScheduleController::class, 'getSchedule']);
 
 });
 

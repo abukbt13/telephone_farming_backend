@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('likes')->default(0);
             $table->integer('comments')->default(0);
             $table->integer('user_id');
-            $table->integer('group_id');
+            $table->integer('group_id')->nullable();
             $table->timestamps();
         });
     }
