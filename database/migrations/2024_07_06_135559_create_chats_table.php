@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('chat_id');
             $table->string('message');
             $table->string('file')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

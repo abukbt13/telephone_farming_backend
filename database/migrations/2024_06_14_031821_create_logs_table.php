@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('details');
             $table->string('platform');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

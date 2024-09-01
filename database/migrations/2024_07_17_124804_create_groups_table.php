@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('profile')->nullable();
             $table->string('category');
+            $table->timestamp('deleted_at')->nullable();
+
             $table->timestamps();
         });
     }

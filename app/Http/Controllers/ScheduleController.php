@@ -10,7 +10,7 @@ class ScheduleController extends Controller
     public function schedule(Request $request){
         $request->validate([
             'venue'=>'required',
-            'date'=>'required',
+            'training_date'=>'required',
             'instructor'=>'required',
             'category'=>'required',
         ]);
@@ -26,4 +26,14 @@ class ScheduleController extends Controller
             'message' =>'Schedule added successfully'
         ]);
     }
+
+    public function listSchedules(){
+        $schedules = Schedule::all();
+        return response()->json([
+            'status'=>'success',
+            'schedules'=>$schedules,
+            'message' =>'Schedule listed successfully'
+        ]);
+    }
+
 }

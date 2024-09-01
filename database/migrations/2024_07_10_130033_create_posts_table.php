@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('comments')->default(0);
             $table->integer('user_id');
             $table->integer('group_id')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('venue');
             $table->string('instructor')->nullable();
             $table->string('category');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

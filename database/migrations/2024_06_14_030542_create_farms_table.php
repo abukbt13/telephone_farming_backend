@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('user_id');
             $table->string('type_of_farming');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

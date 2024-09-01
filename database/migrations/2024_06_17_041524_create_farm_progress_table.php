@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('activity_name');
             $table->string('description')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

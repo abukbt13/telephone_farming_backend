@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('farmer_id');
             $table->integer('manager_id');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
