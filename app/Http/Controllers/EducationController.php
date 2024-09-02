@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Education;
 use Illuminate\Http\Request;
+use League\CommonMark\Node\Block\Document;
 
 class EducationController extends Controller
 {
@@ -13,11 +14,11 @@ class EducationController extends Controller
      */
     public function store(Request $request)
     {
-//        // Validate the incoming request
-//        $request->validate([
-//            'document' => 'required', // Adjust MIME types and max size as needed
-//            'title' => 'required|string',
-//        ]);
+        // Validate the incoming request
+        $request->validate([
+           'document_file'=>'required|mimes:pdf,docx,doc|max:2048',
+            'title'=>'required',
+        ]);
 
 
         $data = $request->all();
@@ -74,6 +75,34 @@ class EducationController extends Controller
             'document'=>$document,
         ]);
     }
+    public function downloadDocument($id)
+    {
+        // Fetch the document from the database using the ID
+        $document = Education::find($id);
+
+        // Check if the document exists
+        if (!$document) {
+            return response()->json([
+                'status'=>'failed',
+                'message'=>'document not found',
+            ]);
+        }
+
+        /// Construct the file path based on the public directory
+        $filePath = public_path('documents/' . $document->document);
+
+        // Check if the file exists in the public directory
+        if (!file_exists($filePath)) {
+            return response()->json([
+                'status'=>'failed',
+                'message'=>'Document not found',
+            ]);
+        }
+
+        // Return the file as a download response
+        return response()->download($filePath);
+    }
+
 
     /**
      * Update the specified resource in storage.

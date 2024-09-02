@@ -35,5 +35,12 @@ class ScheduleController extends Controller
             'message' =>'Schedule listed successfully'
         ]);
     }
-
+    public function getSchedule($id)
+    {
+        $schedule = Schedule::findOrFail($id);
+        return response()->json([
+            'status'=>'success',
+            'shedule'=>$schedule,
+        ]);
+    }
 }

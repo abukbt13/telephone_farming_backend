@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('v1/education', [EducationController::class, 'store']);
     Route::get('v1/education', [EducationController::class, 'showDocuments']);
     Route::get('v1/education/{id}', [EducationController::class, 'getDocument']);
+    Route::get('v1/education/download/{id}', [EducationController::class, 'downloadDocument']);
 
     Route::post('v1/schedule', [ScheduleController::class, 'schedule']);
     Route::get('v1/schedule', [ScheduleController::class, 'listSchedules']);
