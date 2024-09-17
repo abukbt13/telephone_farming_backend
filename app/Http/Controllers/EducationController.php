@@ -16,7 +16,7 @@ class EducationController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-           'document_file'=>'required|mimes:pdf,docx,doc|max:2048',
+           'document_file'=>'required|mimes:pdf,docx,doc|max:20048',
             'title'=>'required',
         ]);
 

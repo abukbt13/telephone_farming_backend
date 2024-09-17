@@ -11,6 +11,7 @@ use App\Http\Controllers\Media\PostsController;
 use App\Http\Controllers\NewPostController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TelephoneFarmer\TelephoneFarmerController;
+use App\Http\Controllers\YoutubeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -76,6 +77,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('v1/schedule', [ScheduleController::class, 'listSchedules']);
     Route::get('v1/schedule/{id}', [ScheduleController::class, 'getSchedule']);
 
+    Route::post('v1/youtube', [YoutubeController::class, 'saveVideo']);
+    Route::get('v1/youtube', [YoutubeController::class, 'listVideos']);
+    Route::get('v1/youtube/{id}', [YoutubeController::class, 'getVideo']);
 });
 
 

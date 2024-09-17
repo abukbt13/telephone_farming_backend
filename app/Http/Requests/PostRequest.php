@@ -24,7 +24,7 @@ class PostRequest extends FormRequest
         return [
             'description' => 'required|string',
             'photos' => 'array|nullable',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Example photo validation
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:20048', // Example photo validation
             'videos' => 'array|nullable',
             'videos.*' => 'file|mimes:mp4,avi,wmv,mpeg|max:20480', // Adjust mime types and max size as needed
         ];
