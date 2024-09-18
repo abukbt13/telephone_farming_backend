@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class YoutubeController extends Controller
 {
     public function saveVideo(Request $request){
-        $request->validate(['title'=>'required','link'=>'required']);
+        $request->validate(['title'=>'required','link'=>'required','category'=>'required']);
         $data = $request->all();
         $youtube = new Youtube();
         $youtube->fill($data);

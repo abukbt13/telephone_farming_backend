@@ -24,7 +24,9 @@ Route::get('/user', function (Request $request) {
 Route::post('auth/register', [AuthController::class, 'createUser']);
 Route::post('auth/login', [AuthController::class, 'login']);
 
-
+Route::post('v1/youtube', [YoutubeController::class, 'saveVideo']);
+Route::get('v1/youtube', [YoutubeController::class, 'listVideos']);
+Route::get('v1/youtube/{id}', [YoutubeController::class, 'getVideo']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('user-auth', [AuthController::class, 'auth']);
     Route::post('auth/user/{id}', [AuthController::class, 'UpdateProfile']);
@@ -77,9 +79,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('v1/schedule', [ScheduleController::class, 'listSchedules']);
     Route::get('v1/schedule/{id}', [ScheduleController::class, 'getSchedule']);
 
-    Route::post('v1/youtube', [YoutubeController::class, 'saveVideo']);
-    Route::get('v1/youtube', [YoutubeController::class, 'listVideos']);
-    Route::get('v1/youtube/{id}', [YoutubeController::class, 'getVideo']);
+
 });
 
 
