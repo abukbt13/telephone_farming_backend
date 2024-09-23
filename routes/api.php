@@ -24,10 +24,14 @@ Route::get('/user', function (Request $request) {
 Route::post('auth/register', [AuthController::class, 'createUser']);
 Route::post('auth/login', [AuthController::class, 'login']);
 
+Route::post('upload/pic', [YoutubeController::class, 'SaveCompressedFile']);
+
 Route::post('v1/youtube', [YoutubeController::class, 'saveVideo']);
+Route::post('v1/youtube/search', [YoutubeController::class, 'searchVideo']);
 Route::get('v1/youtube', [YoutubeController::class, 'listVideos']);
 Route::get('v1/youtube/{id}', [YoutubeController::class, 'getVideo']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('youtube/me', [YoutubeController::class, 'myVideos']);
     Route::get('user-auth', [AuthController::class, 'auth']);
     Route::post('auth/user/{id}', [AuthController::class, 'UpdateProfile']);
     Route::post('tf/farm', [TelephoneFarmerController::class, 'createFarm']);
