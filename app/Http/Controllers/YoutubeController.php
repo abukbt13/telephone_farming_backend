@@ -66,6 +66,8 @@ class YoutubeController extends Controller
     public function saveVideo(Request $request){
         $request->validate(['title'=>'required','link'=>'required','category'=>'required']);
         $data = $request->all();
+        $user_id = auth()->user()->id;
+        $data['user_id'] = $user_id;
         $youtube = new Youtube();
         $youtube->fill($data);
         $youtube->save();
@@ -107,7 +109,7 @@ class YoutubeController extends Controller
         return response()->json([
             'status'=>'success',
             'videos'=>$videos,
-            'message' =>'Schedule listed successfully'
+            'message' =>'Videos links listed successfully'
         ]);
     }
     public function getVideo($id)
