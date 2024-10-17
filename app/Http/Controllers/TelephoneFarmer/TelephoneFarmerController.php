@@ -85,6 +85,27 @@ class TelephoneFarmerController extends Controller
         }
 
     }
+    function  updateManager(Request $request,$id){
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+        ]);
+        $data = $request->all();
+        $user =User::find($id);
+        $user->name = $data['name'];
+        $user->phone = $data['phone'];
+        $user->email = $data['email'];
+        if ($user->update()){
+            return[
+                'status' =>'success',
+                'message' =>'Manager has update',
+                'manager' =>$user,
+            ];
+        }
+
+
+    }
 
     function viewManagers(){
         $user_id = Auth::user()->id;

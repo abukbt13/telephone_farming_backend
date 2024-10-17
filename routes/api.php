@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::post('tf/manager', [TelephoneFarmerController::class, 'createManager']);
+    Route::post('tf/manager/update/{id}', [TelephoneFarmerController::class, 'updateManager']);
     Route::get('tf/manager', [TelephoneFarmerController::class, 'viewManagers']);
 
     Route::post('fm/farm/progress', [FarmProgressController::class, 'AddFarmProgress']);
