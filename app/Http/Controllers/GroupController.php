@@ -22,7 +22,8 @@ class GroupController extends Controller
            $profile= $request->file('profile');
            $PictureName = time() . '_' .  $profile->getClientOriginalName();
            $group['profile'] = $PictureName;
-           $profile->move(public_path('Groups/profiles'), $PictureName);
+//           $profile->move(public_path('Groups/profiles'), $PictureName);
+           $path = $profile->storeAs('groups/photos', $PictureName, 'public');
        }
        $group->save();
        return response()->json([

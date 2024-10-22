@@ -83,11 +83,13 @@ class NewPostController extends Controller
             foreach ($request->file('photos') as $photo) {
                 // Generate a unique file name
                 $fileName = uniqid() . '.' . $photo->getClientOriginalExtension();
-                // Store the photo and get its path
-                $photo->move(public_path('posts/photos'), $fileName);
-                $photoPaths[] = $fileName;
+                // Store the photo in the 'public/posts/photos' directory
+//                $photo->move(public_path('posts/photos'),
+                    $path = $photo->storeAs('posts/photos', $fileName, 'public');
+                $photoPaths[] = $fileName; // You can store the path in the database or use it later
             }
         }
+
         $data['photos'] = json_encode($photoPaths);
         $videoPaths = [];
 // Check if there are any videos to upload

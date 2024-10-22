@@ -107,14 +107,19 @@ class AuthController extends Controller
     public function UpdateProfile(Request $request,$id){
         $data = $request->all();
         $user = User::find($id);
-      $user -> name = $data['name'];
-      $user -> phone = $data['phone'];
+        $user -> name = $data['name'];
+        $user -> phone = $data['phone'];
 
         if ($request->hasFile('profile')) {
             $profile= $request->file('profile');
             $PictureName = time() . '_' .  $profile->getClientOriginalName();
+
+            // Store the file in the storage/app/public/Profile/picture directory
+            $path = $profile->storeAs('public/profile_pictures', $PictureName);
+
+            // Store the file name in the database
             $user->profile = $PictureName;
-            $profile->move(public_path('Profile/picture'), $PictureName);
+            $user->save();
         }
         $user->update();
 
