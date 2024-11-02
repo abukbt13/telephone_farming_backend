@@ -10,6 +10,8 @@ use App\Models\FarmProgress;
 use App\Models\Manager;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class FarmProgressController extends Controller
 {
@@ -28,12 +30,29 @@ class FarmProgressController extends Controller
         $progress->date = $date->format('m-d-y');
         $progress->description = $data['description'];
         $progress->user_id = $user_id;
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
 
-        $picture = $request->file('picture');
-        $pictureName = time() . '_' .  $picture->getClientOriginalName();
+            // Generate a unique filename with the current timestamp
+            $filename = time() . '.' . $file->getClientOriginalExtension();
 
-        $progress->photos = $pictureName;
-        $picture->move(public_path('Farm/Photos'), $pictureName);
+            // Resize and compress the image to 800x800 pixels with 70% quality
+            $img = Image::make($file->getRealPath());
+            $img->resize(800, 800, function ($constraint) {
+                $constraint->aspectRatio(); // Maintain aspect ratio
+                $constraint->upsize(); // Prevent upsizing
+            })->encode('jpg', 70); // Compress to 70% quality
+
+            // Define the storage path inside the 'public' disk in storage
+            $path = 'farm/photos/' . $filename;
+
+            // Save the resized and compressed image to the 'storage/app/public/farm/photos' directory
+            Storage::disk('public')->put($path, $img);
+
+            // Save the filename to the database
+            $progress->photos = $path; // or simply $filename if you only need the filename
+        }
+
 
         $progress->save();
 

@@ -10,6 +10,8 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class NewPostController extends Controller
 {
@@ -77,20 +79,37 @@ class NewPostController extends Controller
         $data['user_id'] = $user_id;
 
         // Initialize an array to store photo paths
+
+
         $photoPaths = [];
-        // Check if there are any photos to upload
+
+// Check if there are any photos to upload
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
-                // Generate a unique file name
-                $fileName = uniqid() . '.' . $photo->getClientOriginalExtension();
-                // Store the photo in the 'public/posts/photos' directory
-//                $photo->move(public_path('posts/photos'),
-                    $path = $photo->storeAs('posts/photos', $fileName, 'public');
-                $photoPaths[] = $fileName; // You can store the path in the database or use it later
+                // Generate a unique filename for each photo with the current timestamp and unique identifier
+                $filename = time() . '_' . uniqid() . '.' . $photo->getClientOriginalExtension();
+
+                // Resize and compress the image to 800x800 pixels with 70% quality
+                $img = Image::make($photo->getRealPath());
+                $img->resize(800, 800, function ($constraint) {
+                    $constraint->aspectRatio(); // Maintain aspect ratio
+                    $constraint->upsize(); // Prevent upsizing
+                })->encode('jpg', 70); // Compress to 70% quality
+
+                // Define the storage path inside the 'public' disk in storage
+                $path = 'posts/photos/' . $filename;
+
+                // Save the resized and compressed image to the 'storage/app/public/posts/photos' directory
+                Storage::disk('public')->put($path, $img);
+
+                // Append the path to the photoPaths array for storage or later use
+                $photoPaths[] = $path;
             }
         }
 
+// Convert the array of photo paths to JSON for database storage
         $data['photos'] = json_encode($photoPaths);
+
         $videoPaths = [];
 // Check if there are any videos to upload
         if ($request->hasFile('videos')) {

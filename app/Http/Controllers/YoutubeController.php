@@ -28,26 +28,21 @@ class YoutubeController extends Controller
         if ($request->hasFile('photo')) {
             // Get the uploaded file
             $file = $request->file('photo');
-
             // Define a unique name for the file and the destination folder
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/images');
-
             // Create the destination folder if it doesn't exist
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
             }
-
             // Resize and compress the image (800x800 pixels and 70% quality)
             $img = Image::make($file->getRealPath());
             $img->resize(800, 800, function ($constraint) {
                 $constraint->aspectRatio(); // Maintain aspect ratio
                 $constraint->upsize(); // Prevent upsizing
             })->encode('jpg', 70); // Compress to 70% quality
-
             // Save the compressed image in the specified folder
             $img->save($destinationPath . '/' . $filename);
-
             // Save the filename in the database
             $photo->photo = $filename;
         }
